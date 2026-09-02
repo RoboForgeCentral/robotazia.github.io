@@ -7,7 +7,26 @@
 <title>ROBOTAZIA | The Original Giant Robot Collection</title>
 
 <meta name="description" content="Robotazia — an extraordinary collection of large-scale robots and mechanical sculptures created from recycled and repurposed materials.">
+/* ROBOTAZIA HERO BACKGROUND */
 
+.hero {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
 <style>
 * {
     box-sizing: border-box;
