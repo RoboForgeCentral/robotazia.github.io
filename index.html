@@ -10,11 +10,17 @@
 /* ROBOTAZIA HERO BACKGROUND */
 
 .hero {
+    position: relative;
+    height: clamp(420px, 36vw, 650px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 130px 25px 80px;
+
     background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
-    position: relative;
-    height: clamp(420px, 36vw, 650px);
 }
 
 .hero::before {
@@ -92,16 +98,6 @@ nav {
 
 /* HERO */
 
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 130px 25px 80px;
-    background:
-        radial-gradient(circle at center, #182033 0%, #080b12 65%);
-}
 
 .hero-content {
     max-width: 1000px;
