@@ -1,1 +1,555 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Robot Gallery | ROBOTAZIA</title>
+
+    <meta name="description" content="Explore the original Robotazia collection of giant robots and mechanical sculptures.">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #080b12;
+            color: white;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(8, 11, 18, 0.96);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* HEADER */
+
+        .gallery-header {
+            text-align: center;
+            padding: 90px 25px 60px;
+        }
+
+        .gallery-header span {
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.65;
+        }
+
+        .gallery-header h1 {
+            font-size: clamp(42px, 7vw, 80px);
+            margin: 15px 0;
+            letter-spacing: 2px;
+        }
+
+        .gallery-header p {
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.7;
+            opacity: 0.75;
+        }
+
+        /* GALLERY */
+
+        .gallery {
+            padding: 20px 25px 100px;
+        }
+
+        .gallery-grid {
+            max-width: 1400px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            cursor: pointer;
+            background: #111722;
+            border-radius: 4px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.06);
+        }
+
+        /* LIGHTBOX */
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.94);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            text-align: center;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            max-width: 90vw;
+            max-height: 82vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .gallery-counter {
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .lightbox-close,
+        .lightbox-prev,
+        .lightbox-next {
+            position: fixed;
+            border: none;
+            background: none;
+            color: white;
+            cursor: pointer;
+            z-index: 2100;
+        }
+
+        .lightbox-close {
+            top: 25px;
+            right: 30px;
+            font-size: 40px;
+        }
+
+        .lightbox-prev {
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 45px;
+        }
+
+        .lightbox-next {
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 45px;
+        }
+
+        .lightbox-close:hover,
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.6;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 50px 25px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            opacity: 0.7;
+            line-height: 1.8;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .nav-inner {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .gallery {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .lightbox-prev {
+                left: 10px;
+            }
+
+            .lightbox-next {
+                right: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- NAVIGATION -->
+
+<nav>
+
+    <div class="nav-inner">
+
+        <div class="logo">
+            ROBOTAZIA
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html#collection">COLLECTION</a>
+
+            <a href="index.html#story">STORY</a>
+
+            <a href="index.html#stem">STEM</a>
+
+            <a href="index.html#museums">MUSEUMS</a>
+
+            <a href="index.html#contact">CONTACT</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- GALLERY HEADER -->
+
+<header class="gallery-header">
+
+    <span>The Original Collection</span>
+
+    <h1>The Robot Gallery</h1>
+
+    <p>
+        Explore the Robotazia collection of giant robots
+        and mechanical sculptures, created from imagination,
+        engineering, recycled and repurposed materials.
+    </p>
+
+</header>
+
+
+<!-- GALLERY -->
+
+<section class="gallery">
+
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- Images added automatically -->
+    </div>
+
+</section>
+
+
+<!-- LIGHTBOX -->
+
+<div id="galleryLightbox" class="lightbox">
+
+    <button class="lightbox-close" onclick="closeGallery()">
+        &times;
+    </button>
+
+    <button class="lightbox-prev" onclick="changeGallery(-1)">
+        &#10094;
+    </button>
+
+    <div class="lightbox-content">
+
+        <img id="lightboxImage"
+             src=""
+             alt="Robotazia Robot">
+
+        <div id="galleryCounter"
+             class="gallery-counter">
+            1 / 39
+        </div>
+
+    </div>
+
+    <button class="lightbox-next"
+            onclick="changeGallery(1)">
+        &#10095;
+    </button>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <strong>ROBOTAZIA</strong>
+
+    <br><br>
+
+    The Original Giant Robot Collection
+
+    <br><br>
+
+    © 2026 Robotazia. All rights reserved.
+
+</footer>
+
+
+<!-- GALLERY JAVASCRIPT -->
+
+<script>
+
+const totalGalleryImages = 39;
+
+let currentGalleryImage = 0;
+
+const galleryGrid =
+    document.getElementById("galleryGrid");
+
+
+/* CREATE GALLERY THUMBNAILS */
+
+for (let i = 1; i <= totalGalleryImages; i++) {
+
+    const item =
+        document.createElement("div");
+
+    item.className = "gallery-item";
+
+    item.onclick = function() {
+
+        openGallery(i - 1);
+
+    };
+
+
+    const image =
+        document.createElement("img");
+
+    image.src = i + ".webp";
+
+    image.alt =
+        "Robotazia Robot " + i;
+
+    image.loading = "lazy";
+
+
+    item.appendChild(image);
+
+    galleryGrid.appendChild(item);
+
+}
+
+
+/* OPEN GALLERY */
+
+function openGallery(index) {
+
+    currentGalleryImage = index;
+
+    document
+        .getElementById("galleryLightbox")
+        .classList.add("active");
+
+    showGalleryImage();
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+/* CLOSE GALLERY */
+
+function closeGallery() {
+
+    document
+        .getElementById("galleryLightbox")
+        .classList.remove("active");
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* PREVIOUS / NEXT */
+
+function changeGallery(direction) {
+
+    currentGalleryImage += direction;
+
+
+    if (currentGalleryImage < 0) {
+
+        currentGalleryImage =
+            totalGalleryImages - 1;
+
+    }
+
+
+    if (currentGalleryImage >= totalGalleryImages) {
+
+        currentGalleryImage = 0;
+
+    }
+
+
+    showGalleryImage();
+
+}
+
+
+/* DISPLAY CURRENT IMAGE */
+
+function showGalleryImage() {
+
+    const imageNumber =
+        currentGalleryImage + 1;
+
+
+    document
+        .getElementById("lightboxImage")
+        .src =
+        imageNumber + ".webp";
+
+
+    document
+        .getElementById("lightboxImage")
+        .alt =
+        "Robotazia Robot " + imageNumber;
+
+
+    document
+        .getElementById("galleryCounter")
+        .textContent =
+        imageNumber +
+        " / " +
+        totalGalleryImages;
+
+}
+
+
+/* KEYBOARD CONTROLS */
+
+document.addEventListener("keydown", function(event) {
+
+    const lightbox =
+        document.getElementById("galleryLightbox");
+
+
+    if (!lightbox.classList.contains("active")) {
+
+        return;
+
+    }
+
+
+    if (event.key === "Escape") {
+
+        closeGallery();
+
+    }
+
+
+    if (event.key === "ArrowLeft") {
+
+        changeGallery(-1);
+
+    }
+
+
+    if (event.key === "ArrowRight") {
+
+        changeGallery(1);
+
+    }
+
+});
+
+
+/* CLOSE OUTSIDE IMAGE */
+
+document
+    .getElementById("galleryLightbox")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+
+            closeGallery();
+
+        }
+
+    });
+
+</script>
+
+
+</body>
+
+</html>
+```
 
