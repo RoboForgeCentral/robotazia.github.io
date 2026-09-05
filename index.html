@@ -320,6 +320,157 @@ section {
     font-size: 18px;
     margin-bottom: 20px;
 }
+    /* ROBOT GALLERY */
+
+.gallery {
+    background: #080b12;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.gallery-item {
+    aspect-ratio: 1 / 1.41;
+    overflow: hidden;
+    background: #111722;
+    border: 1px solid #252d3b;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    border-color: #d4af37;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* LIGHTBOX */
+
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.96);
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-content {
+    max-width: 85vw;
+    max-height: 90vh;
+    text-align: center;
+}
+
+.lightbox-content img {
+    max-width: 85vw;
+    max-height: 82vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    z-index: 2001;
+}
+
+.lightbox-close {
+    top: 20px;
+    right: 30px;
+    font-size: 45px;
+}
+
+.lightbox-prev,
+.lightbox-next {
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    padding: 20px;
+}
+
+.lightbox-prev {
+    left: 20px;
+}
+
+.lightbox-next {
+    right: 20px;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    color: #d4af37;
+}
+
+.gallery-counter {
+    margin-top: 12px;
+    color: #aaa;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+
+/* MOBILE GALLERY */
+
+@media(max-width: 800px) {
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .lightbox-content {
+        max-width: 92vw;
+    }
+
+    .lightbox-content img {
+        max-width: 90vw;
+        max-height: 78vh;
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+        font-size: 35px;
+        padding: 10px;
+    }
+
+    .lightbox-prev {
+        left: 2px;
+    }
+
+    .lightbox-next {
+        right: 2px;
+    }
+
+    .lightbox-close {
+        top: 10px;
+        right: 15px;
+        font-size: 38px;
+    }
+}
 
 /* CHINESE */
 
@@ -408,6 +559,181 @@ footer strong {
 </style>
 </head>
 
+    <script>
+
+const totalGalleryImages = 39;
+
+let currentGalleryImage = 0;
+
+const galleryGrid = document.getElementById("galleryGrid");
+
+
+/* CREATE GALLERY THUMBNAILS */
+
+for (let i = 1; i <= totalGalleryImages; i++) {
+
+    const item = document.createElement("div");
+
+    item.className = "gallery-item";
+
+    item.onclick = function() {
+        openGallery(i - 1);
+    };
+
+
+    const image = document.createElement("img");
+
+    image.src = i + ".webp";
+
+    image.alt = "Robotazia Robot " + i;
+
+    image.loading = "lazy";
+
+
+    item.appendChild(image);
+
+    galleryGrid.appendChild(item);
+
+}
+
+
+/* OPEN GALLERY */
+
+function openGallery(index) {
+
+    currentGalleryImage = index;
+
+    document
+        .getElementById("galleryLightbox")
+        .classList.add("active");
+
+    showGalleryImage();
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+/* CLOSE GALLERY */
+
+function closeGallery() {
+
+    document
+        .getElementById("galleryLightbox")
+        .classList.remove("active");
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* PREVIOUS / NEXT */
+
+function changeGallery(direction) {
+
+    currentGalleryImage += direction;
+
+
+    if (currentGalleryImage < 0) {
+
+        currentGalleryImage =
+            totalGalleryImages - 1;
+
+    }
+
+
+    if (currentGalleryImage >= totalGalleryImages) {
+
+        currentGalleryImage = 0;
+
+    }
+
+
+    showGalleryImage();
+
+}
+
+
+/* DISPLAY CURRENT IMAGE */
+
+function showGalleryImage() {
+
+    const imageNumber =
+        currentGalleryImage + 1;
+
+
+    document
+        .getElementById("lightboxImage")
+        .src = imageNumber + ".webp";
+
+
+    document
+        .getElementById("lightboxImage")
+        .alt =
+        "Robotazia Robot " + imageNumber;
+
+
+    document
+        .getElementById("galleryCounter")
+        .textContent =
+        imageNumber + " / " + totalGalleryImages;
+
+}
+
+
+/* KEYBOARD CONTROLS */
+
+document.addEventListener("keydown", function(event) {
+
+    const lightbox =
+        document.getElementById("galleryLightbox");
+
+
+    if (!lightbox.classList.contains("active")) {
+
+        return;
+
+    }
+
+
+    if (event.key === "Escape") {
+
+        closeGallery();
+
+    }
+
+
+    if (event.key === "ArrowLeft") {
+
+        changeGallery(-1);
+
+    }
+
+
+    if (event.key === "ArrowRight") {
+
+        changeGallery(1);
+
+    }
+
+});
+
+
+/* CLOSE WHEN CLICKING OUTSIDE IMAGE */
+
+document
+    .getElementById("galleryLightbox")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+
+            closeGallery();
+
+        }
+
+    });
+
+</script>
 <body>
 
 <!-- NAVIGATION -->
@@ -513,6 +839,57 @@ footer strong {
 
 </section>
 
+    <!-- ROBOT GALLERY -->
+
+<section id="gallery" class="gallery">
+
+    <div class="container">
+
+        <div class="section-title">
+            <span>The Collection</span>
+            <h2>The Robot Gallery</h2>
+            <p>
+                Explore the Robotazia collection.
+                Click any creation to view it in detail.
+            </p>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery images are added automatically -->
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GALLERY LIGHTBOX -->
+
+<div id="galleryLightbox" class="lightbox">
+
+    <button class="lightbox-close" onclick="closeGallery()">
+        &times;
+    </button>
+
+    <button class="lightbox-prev" onclick="changeGallery(-1)">
+        &#10094;
+    </button>
+
+    <div class="lightbox-content">
+
+        <img id="lightboxImage" src="" alt="Robotazia Robot">
+
+        <div id="galleryCounter" class="gallery-counter">
+            1 / 39
+        </div>
+
+    </div>
+
+    <button class="lightbox-next" onclick="changeGallery(1)">
+        &#10095;
+    </button>
+
+</div>
 
 <!-- STATS -->
 
