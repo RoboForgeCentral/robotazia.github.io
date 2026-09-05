@@ -559,181 +559,6 @@ footer strong {
 </style>
 </head>
 
-    <script>
-
-const totalGalleryImages = 39;
-
-let currentGalleryImage = 0;
-
-const galleryGrid = document.getElementById("galleryGrid");
-
-
-/* CREATE GALLERY THUMBNAILS */
-
-for (let i = 1; i <= totalGalleryImages; i++) {
-
-    const item = document.createElement("div");
-
-    item.className = "gallery-item";
-
-    item.onclick = function() {
-        openGallery(i - 1);
-    };
-
-
-    const image = document.createElement("img");
-
-    image.src = i + ".webp";
-
-    image.alt = "Robotazia Robot " + i;
-
-    image.loading = "lazy";
-
-
-    item.appendChild(image);
-
-    galleryGrid.appendChild(item);
-
-}
-
-
-/* OPEN GALLERY */
-
-function openGallery(index) {
-
-    currentGalleryImage = index;
-
-    document
-        .getElementById("galleryLightbox")
-        .classList.add("active");
-
-    showGalleryImage();
-
-    document.body.style.overflow = "hidden";
-
-}
-
-
-/* CLOSE GALLERY */
-
-function closeGallery() {
-
-    document
-        .getElementById("galleryLightbox")
-        .classList.remove("active");
-
-    document.body.style.overflow = "";
-
-}
-
-
-/* PREVIOUS / NEXT */
-
-function changeGallery(direction) {
-
-    currentGalleryImage += direction;
-
-
-    if (currentGalleryImage < 0) {
-
-        currentGalleryImage =
-            totalGalleryImages - 1;
-
-    }
-
-
-    if (currentGalleryImage >= totalGalleryImages) {
-
-        currentGalleryImage = 0;
-
-    }
-
-
-    showGalleryImage();
-
-}
-
-
-/* DISPLAY CURRENT IMAGE */
-
-function showGalleryImage() {
-
-    const imageNumber =
-        currentGalleryImage + 1;
-
-
-    document
-        .getElementById("lightboxImage")
-        .src = imageNumber + ".webp";
-
-
-    document
-        .getElementById("lightboxImage")
-        .alt =
-        "Robotazia Robot " + imageNumber;
-
-
-    document
-        .getElementById("galleryCounter")
-        .textContent =
-        imageNumber + " / " + totalGalleryImages;
-
-}
-
-
-/* KEYBOARD CONTROLS */
-
-document.addEventListener("keydown", function(event) {
-
-    const lightbox =
-        document.getElementById("galleryLightbox");
-
-
-    if (!lightbox.classList.contains("active")) {
-
-        return;
-
-    }
-
-
-    if (event.key === "Escape") {
-
-        closeGallery();
-
-    }
-
-
-    if (event.key === "ArrowLeft") {
-
-        changeGallery(-1);
-
-    }
-
-
-    if (event.key === "ArrowRight") {
-
-        changeGallery(1);
-
-    }
-
-});
-
-
-/* CLOSE WHEN CLICKING OUTSIDE IMAGE */
-
-document
-    .getElementById("galleryLightbox")
-    .addEventListener("click", function(event) {
-
-        if (event.target === this) {
-
-            closeGallery();
-
-        }
-
-    });
-
-</script>
 <body>
 
 <!-- NAVIGATION -->
@@ -1193,6 +1018,189 @@ document
     © 2026 Robotazia. All rights reserved.
 
 </footer>
+
+
+<!-- ROBOT GALLERY JAVASCRIPT -->
+
+<script>
+
+const totalGalleryImages = 39;
+
+let currentGalleryImage = 0;
+
+const galleryGrid = document.getElementById("galleryGrid");
+
+
+/* CREATE GALLERY THUMBNAILS */
+
+for (let i = 1; i <= totalGalleryImages; i++) {
+
+    const item = document.createElement("div");
+
+    item.className = "gallery-item";
+
+    item.onclick = function() {
+        openGallery(i - 1);
+    };
+
+
+    const image = document.createElement("img");
+
+    image.src = i + ".webp";
+
+    image.alt = "Robotazia Robot " + i;
+
+    image.loading = "lazy";
+
+
+    item.appendChild(image);
+
+    galleryGrid.appendChild(item);
+
+}
+
+
+/* OPEN GALLERY */
+
+function openGallery(index) {
+
+    currentGalleryImage = index;
+
+    document
+        .getElementById("galleryLightbox")
+        .classList.add("active");
+
+    showGalleryImage();
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+/* CLOSE GALLERY */
+
+function closeGallery() {
+
+    document
+        .getElementById("galleryLightbox")
+        .classList.remove("active");
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* PREVIOUS / NEXT */
+
+function changeGallery(direction) {
+
+    currentGalleryImage += direction;
+
+
+    if (currentGalleryImage < 0) {
+
+        currentGalleryImage =
+            totalGalleryImages - 1;
+
+    }
+
+
+    if (currentGalleryImage >= totalGalleryImages) {
+
+        currentGalleryImage = 0;
+
+    }
+
+
+    showGalleryImage();
+
+}
+
+
+/* DISPLAY CURRENT IMAGE */
+
+function showGalleryImage() {
+
+    const imageNumber =
+        currentGalleryImage + 1;
+
+
+    document
+        .getElementById("lightboxImage")
+        .src = imageNumber + ".webp";
+
+
+    document
+        .getElementById("lightboxImage")
+        .alt =
+        "Robotazia Robot " + imageNumber;
+
+
+    document
+        .getElementById("galleryCounter")
+        .textContent =
+        imageNumber + " / " + totalGalleryImages;
+
+}
+
+
+/* KEYBOARD CONTROLS */
+
+document.addEventListener("keydown", function(event) {
+
+    const lightbox =
+        document.getElementById("galleryLightbox");
+
+
+    if (!lightbox.classList.contains("active")) {
+
+        return;
+
+    }
+
+
+    if (event.key === "Escape") {
+
+        closeGallery();
+
+    }
+
+
+    if (event.key === "ArrowLeft") {
+
+        changeGallery(-1);
+
+    }
+
+
+    if (event.key === "ArrowRight") {
+
+        changeGallery(1);
+
+    }
+
+});
+
+
+/* CLOSE WHEN CLICKING OUTSIDE IMAGE */
+
+document
+    .getElementById("galleryLightbox")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+
+            closeGallery();
+
+        }
+
+    });
+
+</script>
+
+
+</body>
+</html>
 
 
 </body>
